@@ -1,7 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import CommentsBox from '../CommentsBox/CommentsBox';
-import SubMessage from '../Message/subMessage/SubMessage';
-import './Message.css';
+import SubCommentsBox from '../../CommentsBox/SubCommentsBox/SubCommentsBox';
 
 const showReply = React.createContext();
 
@@ -9,30 +7,16 @@ export function useOneReply() {
     return useContext(showReply);
 }
 
-function Message(props) {
+function SubMessage(props) {
     const likeIcon = useRef();
     const numLikes = useRef();
 
-    const [arrowUp, setArrowUp] = useState(false);
     const [openReply, setOpenReply] = useState(false);
 
     // TOGGLED WHEN CANCEL BUTTON AND REPLY BUTTON ARE PRESSED
     const changeOpenReply = () => {
         setOpenReply(prevState => prevState = !prevState);
     };
-
-    // TOGGLED ARROW UP AND DOWN
-    let arrow = <i className="fas fa-caret-down"></i>
-
-    const changeArrow = () => {
-        setArrowUp(prevState => prevState = !prevState);
-    };
-
-    if(arrowUp) {
-        arrow = <i className="fas fa-caret-up"></i>
-    }else{
-        arrow = <i className="fas fa-caret-down"></i>
-    }
 
     // LIKE MESSAGE
     let toggleLike = false;
@@ -81,21 +65,12 @@ function Message(props) {
                 }
             </section>
             <showReply.Provider value={changeOpenReply}>
-                {openReply && <CommentsBox 
+                {openReply && <SubCommentsBox
                 autoFocus={true} />}
             </showReply.Provider>
-            <section className="arrowReplies" onClick={changeArrow}>
-                {arrow}
-                <div>View 4 Replies</div>
-            </section>
-            { arrowUp && (
-            <section className="subMessages">
-                <SubMessage user="Dummy Reply"message="This is dummy reply" likes={2} />
-            </section>
-            )}
         </section>
         </>
     );
 }
 
-export default Message;
+export default SubMessage;
