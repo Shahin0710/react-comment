@@ -90,7 +90,16 @@ function Message(props) {
             </section>
             { arrowUp && (
             <section className="subMessages">
-                <SubMessage user="Dummy Reply"message="This is dummy reply" likes={2} />
+                   {props.replies.map(item => (
+                        <SubMessage
+                            key={Math.random}
+                            parentKey={props?.useKey}
+                            subId={item?._id}
+                            user={item?.user}
+                            message={item?.message}
+                            likes={item?.likes}
+                        />
+                    ))}
             </section>
             )}
         </section>
