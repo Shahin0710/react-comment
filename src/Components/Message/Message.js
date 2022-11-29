@@ -84,10 +84,14 @@ function Message(props) {
                 {openReply && <CommentsBox 
                 autoFocus={true} />}
             </showReply.Provider>
-            <section className="arrowReplies" onClick={changeArrow}>
+
+            {props?.replies?.length > 0 &&(
+                <section className="arrowReplies" onClick={changeArrow}>
                 {arrow}
-                <div>View 4 Replies</div>
-            </section>
+                <div>View {props?.replies?.length} Replies</div>
+                </section>
+            )}
+
             { arrowUp && (
             <section className="subMessages">
                    {props.replies.map(item => (
@@ -96,7 +100,7 @@ function Message(props) {
                             parentKey={props?.useKey}
                             subId={item?._id}
                             user={item?.user}
-                            message={item?.message}
+                            message={item?.user_message}
                             likes={item?.likes}
                         />
                     ))}

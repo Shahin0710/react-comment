@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react';
+import { useMainContext } from '../../../context/Context';
 import '../CommentsBox.css';
 
 function TopCommentsBox(props) {
 
+    const {setMessageResult} = useMainContext();
     const message = useRef(null);
     // TRIGGER THE UNDERLINE ANIMATION
     const [showCommentLine, setCommentLine] = useState(false);
@@ -29,8 +31,32 @@ function TopCommentsBox(props) {
         }
     }
 
+    // send comment
     const sendComment = (event) => {
         event.preventDefault();
+        
+        const user = "Message User";
+        const user_message = message.current.value;
+        const likes = 0;
+        const editable = true;
+        const replies = [];
+
+        const newComment = {user, user_message, likes, editable, replies}
+        
+        fetch('http://localhost:8000/new-comment', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newComment)
+        })
+        .then(res => res.json())
+        .then(data =>{
+            console.log(data);
+            setMessageResult(prevState => !prevState);
+            message.current.value = '';
+            setEnableBtn(true);
+        })
     }
 
     return (

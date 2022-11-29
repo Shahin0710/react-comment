@@ -1,13 +1,16 @@
 import './App.css';
 import TopCommentsBox from './Components/CommentsBox/TopCommentsBox/TopCommentsBox';
+import { ContextProvider } from './context/Context';
 import MessageScroll from './MessageScroll';
 
 function App() {
   return (
-    <div className="colHolder">
-      <TopCommentsBox autoFocus={false} />
-      <MessageScroll />
-    </div>
+    <ContextProvider>
+      <div className="colHolder">
+        <TopCommentsBox autoFocus={false} />
+        <MessageScroll />
+      </div>
+    </ContextProvider>
   );
 }
 
